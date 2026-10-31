@@ -1,9 +1,18 @@
 from pathlib import Path
 
 
-def find_checkpoint(directory: Path, index: int | None) -> Path:
+def find_checkpoint(
+    directory: Path,
+    index: int | None,
+    *,
+    files: tuple[str, ...] = (
+        "model.pt",
+        "discriminators.pt",
+        "optimizer.pt",
+        "d_optimizer.pt",
+    ),
+) -> Path:
     if index is None:
-        files = ("model.pt", "discriminators.pt", "optimizer.pt", "d_optimizer.pt")
         index = max(
             (
                 int(path.name)

@@ -2,6 +2,11 @@ from torch import Tensor, nn, stack
 from torchaudio.transforms import MelSpectrogram
 
 
+class DistillationLoss(nn.Module):
+    def forward(self, x: Tensor, y: Tensor) -> Tensor:
+        return x.detach().sub(y).square().mean().mul(1000)
+
+
 class ReconstructionLoss(nn.Module):
     def __init__(self, *, sample_rate: int):
         super().__init__()

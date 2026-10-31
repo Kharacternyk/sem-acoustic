@@ -5,8 +5,16 @@ from snake import Snake
 
 
 class Encoder(nn.Module):
-    def __init__(self, *, channel_count: int):
+    def __init__(
+        self,
+        *,
+        channel_count: int,
+        code_channel_count: int | None = None,
+    ):
         super().__init__()
+        if code_channel_count is None:
+            code_channel_count = channel_count
+
         self.first_conv = nn.Conv1d(
             in_channels=1, out_channels=channel_count, kernel_size=7, padding="same"
         )
@@ -19,7 +27,9 @@ class Encoder(nn.Module):
         self.final_snake = Snake(channel_count=16 * channel_count)
 
         self.project = nn.Conv1d(
-            in_channels=16 * channel_count, out_channels=channel_count, kernel_size=1
+            in_channels=16 * channel_count,
+            out_channels=code_channel_count,
+            kernel_size=1,
         )
         self.project_snake = Snake(channel_count=16 * channel_count)
 
