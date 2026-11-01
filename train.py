@@ -33,7 +33,7 @@ from scale_discriminator import ScaleDiscriminator
 
 segment_length = 7_950
 accumulation_steps = 1
-batch_size = 32
+batch_size = 16
 
 
 def get_lr(step: int) -> float:
